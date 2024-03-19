@@ -1,42 +1,38 @@
 package skil;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.Scanner;
 import java.util.Stack;
-import java.util.StringTokenizer;
 
 public class Stack2 {
 
-	 public static void main(String[] args) throws IOException {
-	        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-	        int n = Integer.parseInt(br.readLine());
-	        int[] arr = new int[n];
-	        int[] answer = new int[n];
-	        StringTokenizer st = new StringTokenizer(br.readLine());
-
+	  public static void main(String[] args) {
+	        Scanner scanner = new Scanner(System.in);
+	        // 배열의 크기 입력받아서 생성
+	        int n = scanner.nextInt();
+	        int[] numbers = new int[n];
+	        // 입력받은 배열의 size와 같아질때까지 배열의 값을 추가
 	        for (int i = 0; i < n; i++) {
-	            arr[i] = Integer.parseInt(st.nextToken());
+	            numbers[i] = scanner.nextInt();
 	        }
+	        int[] result = findNextGreater(numbers);
+	        for (int num : result) {
+	            System.out.print(num + " ");
+	        }
+	    }
 
+	    public static int[] findNextGreater(int[] arr) {
+	        int[] result = new int[arr.length];
+	        // 배열 result의 값을 -1로 초기화 [-1,-1,-1,-1]
+	        Arrays.fill(result, -1);
 	        Stack<Integer> stack = new Stack<>();
-	        for (int i = 0; i < n; i++) {
+	        for (int i = 0; i < arr.length; i++) {
+	        	// 스택이 
 	            while (!stack.isEmpty() && arr[stack.peek()] < arr[i]) {
-	                answer[stack.pop()] = arr[i];
+	                result[stack.pop()] = arr[i];
 	            }
 	            stack.push(i);
 	        }
-
-	        // 스택에 남아있는 인덱스들의 오큰수는 -1이다.
-	        while (!stack.isEmpty()) {
-	            answer[stack.pop()] = -1;
-	        }
-
-	        StringBuilder sb = new StringBuilder();
-	        for (int num : answer) {
-	            sb.append(num).append(" ");
-	        }
-
-	        System.out.println(sb);
+	        return result;
 	    }
 }
